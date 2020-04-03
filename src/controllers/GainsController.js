@@ -47,8 +47,8 @@ module.exports = {
     const { id } = req.body;
     try {
       await connection("gains")
-        .delete()
-        .where({ id });
+        .where({ id })
+        .delete();
       return res.json("delete");
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
