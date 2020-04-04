@@ -10,10 +10,10 @@ module.exports = {
     }
   },
   async createGains(req, res) {
-    const { nome, valor, sacado, parcelas, data, logo } = req.body;
+    const { categoria, valor, sacado, parcelas, data, logo } = req.body;
     try {
       await connection("gains").insert({
-        nome,
+        categoria,
         valor,
         sacado,
         parcelas,
@@ -26,11 +26,11 @@ module.exports = {
     }
   },
   async updateGains(req, res) {
-    const { id, nome, valor, sacado, parcelas, data, logo } = req.body;
+    const { id, categoria, valor, sacado, parcelas, data, logo } = req.body;
     try {
       await connection("gains")
         .update({
-          nome,
+          categoria,
           valor,
           sacado,
           parcelas,
@@ -38,7 +38,7 @@ module.exports = {
           logo
         })
         .where({ id });
-      return res.json(`UPDATED ${nome}`);
+      return res.json(`UPDATED ${categoria}`);
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
     }
