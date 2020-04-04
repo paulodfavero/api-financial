@@ -32,7 +32,7 @@ routes.get("/", async (req, res) => {
     const compare = await bcrypt.compare("123456", user.password);
     return res.json(compare);
   } catch (error) {
-    console.log("ERRO LIST FROM USER", error);
+    console.log("ERRO TO GET LIST FROM USER", error);
     return res.status(400).json(error);
   }
 });
