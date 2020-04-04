@@ -31,12 +31,10 @@ module.exports = {
   production: {
     client: "postgresql",
     connection: {
-      filename: "https://api-financial.herokuapp.com/src/database/db.sqlite3"
+      database: "my_db",
+      user: "username",
+      password: "password"
     },
-    migrations: {
-      directory: "https://api-financial.herokuapp.com/src/database/migrations"
-    },
-    useNullAsDefault: true,
     pool: {
       min: 2,
       max: 10
