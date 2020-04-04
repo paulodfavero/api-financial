@@ -6,5 +6,5 @@ const env =
     ? configuration.production
     : configuration.development;
 const connection = knex(env);
-
+console.log("LOCAL", env);
 module.exports = connection;
