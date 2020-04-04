@@ -38,7 +38,7 @@ module.exports = {
           logo
         })
         .where({ id });
-      return res.json(`UPDATED ${id}`);
+      return res.json(`UPDATED`);
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
     }
