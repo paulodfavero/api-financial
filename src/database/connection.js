@@ -3,8 +3,8 @@ const configuration = require("../../knexfile");
 
 const env =
   process.env.NODE_ENV === "prod"
-    ? configuration.production
-    : configuration.development;
+    ? configuration.development
+    : configuration.production;
 const connection = knex(env);
 console.log("LOCAL", env);
 module.exports = connection;
