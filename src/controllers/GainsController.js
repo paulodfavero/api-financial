@@ -42,16 +42,16 @@ module.exports = {
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
     }
-  },
-  async deleteGains(req, res) {
-    const { id } = req.body;
-    try {
-      await connection("gains")
-        .where({ id })
-        .delete();
-      return res.json("delete");
-    } catch (error) {
-      return res.json(`ERROR -- ${error}`);
-    }
   }
+  // async deleteGains(req, res) {
+  //   const { id } = req.body;
+  //   try {
+  //     await connection("gains")
+  //       .where({ id })
+  //       .delete();
+  //     return res.json("delete");
+  //   } catch (error) {
+  //     return res.json(`ERROR -- ${error}`);
+  //   }
+  // }
 };
