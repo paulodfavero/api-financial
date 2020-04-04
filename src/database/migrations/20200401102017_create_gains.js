@@ -12,7 +12,7 @@ exports.up = function(knex) {
       table.timestamp("created_at").defaultTo(knex.fn.now());
     });
   } catch (error) {
-    return res.status(401).send(`ERROR TO CREATE A DATABASE GAINS -- ${error}`);
+    return res.status(401).send(`ERROR TO CREATE DATABASE GAINS -- ${error}`);
   }
 };
 
