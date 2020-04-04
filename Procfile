@@ -1,1 +1,1 @@
-web: node src/index.js
+web: knex migrate:latest --env production && node src/index.js
