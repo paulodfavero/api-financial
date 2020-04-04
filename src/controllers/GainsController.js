@@ -20,7 +20,7 @@ module.exports = {
         data,
         logo
       });
-      return res.json({ nome });
+      return res.json({ categoria });
     } catch (error) {
       return res.json(`ERROR TO CREATE GAINS -- ${error}`);
     }
