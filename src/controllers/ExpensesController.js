@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const requireDir = require("require-dir");
 
 requireDir("../models");
-
 const Expenses = mongoose.model("Expenses");
 
 module.exports = {
