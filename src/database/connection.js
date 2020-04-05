@@ -7,5 +7,5 @@ const env =
     : configuration.production;
 const connection = knex(env);
 
-console.log("LOCAL", env);
+console.log("LCAL", env);
 module.exports = connection;
