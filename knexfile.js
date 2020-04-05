@@ -9,6 +9,9 @@ module.exports = {
     migrations: {
       directory: "./src/database/migrations"
     },
+    seeds: {
+      directory: "./src/database/seeds"
+    },
     useNullAsDefault: true
   },
 
@@ -27,14 +30,31 @@ module.exports = {
       tableName: "knex_migrations"
     }
   },
-
-  production: {
-    client: "sqlite3",
+  test: {
+    client: "pg",
     connection: {
-      filename: "./src/database/prod.sqlite3"
+      host: "localhost",
+      user: "me",
+      password: "volanty",
+      database: "financial",
+      charset: "utf8"
     },
     migrations: {
       directory: "./src/database/migrations"
+    },
+    seeds: {
+      directory: "./src/database/seeds"
+    }
+  },
+
+  production: {
+    client: "pg",
+    connection: process.env.DATABASE_URL,
+    migrations: {
+      tableName: "./src/database/migrations"
+    },
+    seeds: {
+      directory: "./src/database/seeds/production"
     },
     useNullAsDefault: true
   }

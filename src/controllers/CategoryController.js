@@ -1,9 +1,13 @@
-const connection = require("../database/connection");
+const mongoose = require("mongoose");
+const requireDir = require("require-dir");
+
+requireDir("../models");
+const Category = mongoose.model("Category");
 
 module.exports = {
   async listCategory(req, res) {
     try {
-      const category = await connection("category").select("*");
+      const category = await Category.find();
       return res.json(category);
     } catch (error) {
       return res
@@ -15,7 +19,7 @@ module.exports = {
     const { label, key } = req.body;
     const array = req.body;
     try {
-      const category = await connection("category").select("key");
+      const category = await Category.find();
       category.map(item => {
         if (key === item.key) {
           const response = res
@@ -25,7 +29,7 @@ module.exports = {
         }
       });
       array.map(async item => {
-        await connection("category").insert({
+        await Category.create({
           label: item.label,
           key: item.key
         });
@@ -37,11 +41,9 @@ module.exports = {
     }
   },
   async deleteCategory(req, res) {
-    const { id } = req.body;
+    const { _id } = req.body;
     try {
-      await connection("category")
-        .delete()
-        .where({ id });
+      await Category.findByIdAndDelete(_id);
       return res.json("delete");
     } catch (error) {
       return res.json(`ERROR -- ${error}`);

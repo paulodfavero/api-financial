@@ -1,9 +1,16 @@
-const connection = require("../database/connection");
+// const connection = require("../database/connection");
+const mongoose = require("mongoose");
+const requireDir = require("require-dir");
+
+requireDir("../models");
+
+const Expenses = mongoose.model("Expenses");
 
 module.exports = {
   async listExpenses(req, res) {
+    const { page = 1 } = req.query;
     try {
-      const expenses = await connection("expenses").select("*");
+      const expenses = await Expenses.paginate({}, { page, limit: 10 });
       return res.json(expenses);
     } catch (error) {
       return res
@@ -12,65 +19,28 @@ module.exports = {
     }
   },
   async createExpenses(req, res) {
-    const {
-      nome,
-      categoria,
-      valor,
-      parcelas,
-      data_inicio,
-      tipo_despesa,
-      vencimento
-    } = req.body;
     try {
-      await connection("expenses").insert({
-        nome,
-        categoria,
-        valor,
-        parcelas,
-        data_inicio,
-        tipo_despesa,
-        vencimento
-      });
-      return res.json({ nome });
+      const expenses = await Expenses.create(req.body);
+      return res.json(expenses);
     } catch (error) {
       return res.json(`ERROR TO CREATE EXPENSES -- ${error}`);
     }
   },
-  async deleteExpenses(req, res) {
-    const { id } = req.body;
+  async updateExpenses(req, res) {
     try {
-      await connection("expenses")
-        .delete()
-        .where({ id });
-      return res.json("delete");
+      const expenses = await Expenses.findOneAndUpdate(req.body._id, req.body, {
+        new: true
+      });
+      return res.json(expenses);
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
     }
   },
-  async updateExpenses(req, res) {
-    const {
-      id,
-      nome,
-      categoria,
-      valor,
-      parcelas,
-      data_inicio,
-      tipo_despesa,
-      vencimento
-    } = req.body;
+  async deleteExpenses(req, res) {
+    const { _id } = req.body;
     try {
-      await connection("expenses")
-        .update({
-          nome,
-          categoria,
-          valor,
-          parcelas,
-          data_inicio,
-          tipo_despesa,
-          vencimento
-        })
-        .where({ id });
-      return res.json(`UPDATED ${nome}`);
+      await Expenses.findByIdAndDelete(_id);
+      return res.json("delete");
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
     }

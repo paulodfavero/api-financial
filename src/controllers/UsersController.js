@@ -1,11 +1,16 @@
+const mongoose = require("mongoose");
+const requireDir = require("require-dir");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
-const connection = require("../database/connection");
+
+requireDir("../models");
+
+const Users = mongoose.model("Users");
 
 module.exports = {
   async index(req, res) {
     try {
-      const user = await connection("users").select("*");
+      const user = await Users.find();
       return res.json(user);
     } catch (error) {
       console.log("ERRO TO GET LIST FROM USER", error);
@@ -14,12 +19,10 @@ module.exports = {
   },
   async createUsers(req, res) {
     const { name, email, whatsapp, password, city, uf } = req.body;
-    const id = crypto.randomBytes(4).toString("HEX");
     const hash = await bcrypt.hash(password, 10);
 
     try {
-      await connection("users").insert({
-        id,
+      const users = await Users.create({
         name,
         email,
         whatsapp,
@@ -27,7 +30,7 @@ module.exports = {
         city,
         uf
       });
-      return res.json({ id });
+      return res.json(users);
     } catch (error) {
       console.log("ERRO TO CREATE USER", error);
       return res.status(400).json(error.status);

@@ -1,11 +1,6 @@
-const knex = require("knex");
-const configuration = require("../../knexfile");
+const mongoose = require("mongoose");
 
-const env =
-  process.env.NODE_ENV === "dev"
-    ? configuration.development
-    : configuration.production;
-const connection = knex(env);
-
-console.log("LCAL", env);
-module.exports = connection;
+mongoose.connect("mongodb://localhost:27017:financialapi", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});

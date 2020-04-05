@@ -1,57 +1,45 @@
-const connection = require("../database/connection");
+const mongoose = require("mongoose");
+const requireDir = require("require-dir");
+
+requireDir("../models");
+
+const Gains = mongoose.model("Gains");
 
 module.exports = {
   async listGains(req, res) {
+    const { page = 1 } = req.query;
     try {
-      const gains = await connection("gains").select("*");
+      const gains = await Gains.paginate({}, { page, limit: 10 });
       return res.json(gains);
     } catch (error) {
       return res.status(400).json(`THERE'S NO GAINS WHITH THIS ID -- ${error}`);
     }
   },
   async createGains(req, res) {
-    const { categoria, valor, sacado, parcelas, data, logo } = req.body;
     try {
-      await connection("gains").insert({
-        categoria,
-        valor,
-        sacado,
-        parcelas,
-        data,
-        logo
-      });
-      return res.json({ categoria });
+      const gains = await Gains.create(req.body);
+      return res.json(gains);
     } catch (error) {
       return res.json(`ERROR TO CREATE GAINS -- ${error}`);
     }
   },
   async updateGains(req, res) {
-    const { id, categoria, valor, sacado, parcelas, data, logo } = req.body;
     try {
-      await connection("gains")
-        .update({
-          categoria,
-          valor,
-          sacado,
-          parcelas,
-          data,
-          logo
-        })
-        .where({ id });
-      return res.json(`UPDATED`);
+      const gains = await Gains.findOneAndUpdate(req.body._id, req.body, {
+        new: true
+      });
+      return res.json(gains);
+    } catch (error) {
+      return res.json(`ERROR -- ${error}`);
+    }
+  },
+  async deleteGains(req, res) {
+    const { _id } = req.body;
+    try {
+      await Gains.findByIdAndDelete(_id);
+      return res.json("delete");
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
     }
   }
-  // async deleteGains(req, res) {
-  //   const { id } = req.body;
-  //   try {
-  //     await connection("gains")
-  //       .where({ id })
-  //       .delete();
-  //     return res.json("delete");
-  //   } catch (error) {
-  //     return res.json(`ERROR -- ${error}`);
-  //   }
-  // }
 };
