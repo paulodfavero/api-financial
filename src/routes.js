@@ -52,7 +52,7 @@ routes.put("/gains", updateGains);
 
 routes.get("/expenses", listExpenses);
 routes.post("/expenses", createExpenses);
-routes.put("/expenses", updateExpenses);
+routes.put("/expenses/:id", updateExpenses);
 routes.delete("/expenses", deleteExpenses);
 
 module.exports = routes;
