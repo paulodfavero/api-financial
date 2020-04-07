@@ -12,7 +12,8 @@ const {
 const {
   createGains,
   listGains,
-  updateGains
+  updateGains,
+  deleteGains
 } = require("./controllers/GainsController");
 const {
   createExpenses,
@@ -48,7 +49,7 @@ routes.delete("/category", deleteCategory);
 routes.get("/gains", listGains);
 routes.post("/gains", createGains);
 routes.put("/gains", updateGains);
-// routes.delete("/gains", deleteGains);
+routes.delete("/gains", deleteGains);
 
 routes.get("/expenses", listExpenses);
 routes.post("/expenses", createExpenses);

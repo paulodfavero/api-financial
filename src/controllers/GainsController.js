@@ -34,9 +34,8 @@ module.exports = {
     }
   },
   async deleteGains(req, res) {
-    const { _id } = req.body;
     try {
-      await Gains.findByIdAndDelete(_id);
+      await Gains.findByIdAndDelete(req.body._id);
       return res.json("delete");
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
