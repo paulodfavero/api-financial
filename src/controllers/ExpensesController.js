@@ -9,7 +9,7 @@ module.exports = {
   async listExpenses(req, res) {
     const { page = 1 } = req.query;
     try {
-      const expenses = await Expenses.paginate({}, { page, limit: 10 });
+      const expenses = await Expenses.paginate({}, { page, limit: 100 });
       return res.json(expenses);
     } catch (error) {
       return res
