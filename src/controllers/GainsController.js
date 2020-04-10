@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const requireDir = require("require-dir");
+const moment = require("moment-timezone");
 
 requireDir("../models");
 
@@ -16,8 +17,36 @@ module.exports = {
     }
   },
   async createGains(req, res) {
+    const {
+      name,
+      category,
+      value,
+      partials,
+      startDate,
+      gainsType,
+      limitDate
+    } = req.body;
+    let gains = "";
+    let limitDateInit = limitDate;
     try {
-      const gains = await Gains.create(req.body);
+      for (let index = 0; index < partials && index <= 11; index++) {
+        const newDate = moment(limitDateInit)
+          .add(1, "M")
+          .format("YYYY-MM-DD");
+        const newPartials = partials - index;
+
+        const data = {
+          name,
+          category,
+          value,
+          partials: newPartials,
+          startDate,
+          gainsType,
+          limitDate: limitDateInit
+        };
+        gains = await Gains.create(data);
+        limitDateInit = newDate;
+      }
       return res.json(gains);
     } catch (error) {
       return res.json(`ERROR TO CREATE GAINS -- ${error}`);

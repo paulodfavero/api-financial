@@ -1,6 +1,7 @@
 // const connection = require("../database/connection");
 const mongoose = require("mongoose");
 const requireDir = require("require-dir");
+const moment = require("moment-timezone");
 
 requireDir("../models");
 const Expenses = mongoose.model("Expenses");
@@ -18,8 +19,36 @@ module.exports = {
     }
   },
   async createExpenses(req, res) {
+    const {
+      name,
+      category,
+      value,
+      partials,
+      startDate,
+      expensesType,
+      limitDate
+    } = req.body;
+    let expenses = "";
+    let limitDateInit = limitDate;
     try {
-      const expenses = await Expenses.create(req.body);
+      for (let index = 0; index < partials && index <= 11; index++) {
+        const newDate = moment(limitDateInit)
+          .add(1, "M")
+          .format("YYYY-MM-DD");
+        const newPartials = partials - index;
+
+        const data = {
+          name,
+          category,
+          value,
+          partials: newPartials,
+          startDate,
+          expensesType,
+          limitDate: limitDateInit
+        };
+        expenses = await Expenses.create(data);
+        limitDateInit = newDate;
+      }
       return res.json(expenses);
     } catch (error) {
       return res.status(400).json(`ERROR TO CREATE EXPENSES -- ${error}`);
