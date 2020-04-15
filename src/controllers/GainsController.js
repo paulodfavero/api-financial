@@ -10,7 +10,7 @@ module.exports = {
   async listGains(req, res) {
     const { page = 1 } = req.query;
     try {
-      const gains = await Gains.paginate({}, { page, limit: 100 });
+      const gains = await Gains.paginate({}, { page, limit: 10000 });
       return res.json(gains);
     } catch (error) {
       return res.status(400).json(`THERE'S NO GAINS WHITH THIS ID -- ${error}`);
