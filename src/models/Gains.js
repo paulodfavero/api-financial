@@ -15,7 +15,12 @@ const GainsSchema = new mongoose.Schema({
     required: true
   },
   partials: {
-    type: String
+    total: {
+      type: String
+    },
+    current: {
+      type: String
+    }
   },
   startDate: {
     type: String

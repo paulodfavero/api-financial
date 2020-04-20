@@ -30,18 +30,24 @@ module.exports = {
     } = req.body;
     let expenses = "";
     let limitDateInit = limitDate;
+    let totalGet = partials.total;
+    if (totalGet === "") {
+      totalGet = 1;
+    }
     try {
-      for (let index = 0; index < partials && index <= 11; index++) {
+      for (let index = 1; index <= totalGet; index++) {
         const newDate = moment(limitDateInit)
           .add(1, "M")
           .format("YYYY-MM-DD");
-        const newPartials = partials - index;
 
         const data = {
           name,
           category,
           value,
-          partials: newPartials,
+          partials: {
+            total: totalGet,
+            current: index
+          },
           startDate,
           expensesType,
           limitDate: limitDateInit
