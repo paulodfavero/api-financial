@@ -55,7 +55,6 @@ module.exports = {
     }
   },
   async updateExpenses(req, res) {
-    console.log(req.params.id);
     try {
       const expenses = await Expenses.findOneAndUpdate(
         { _id: req.params.id },
