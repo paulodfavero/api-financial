@@ -48,7 +48,8 @@ module.exports = {
           },
           startDate,
           gainsType,
-          limitDate: limitDateInit
+          limitDate: limitDateInit,
+          status: false
         };
         gains = await Gains.create(data);
         limitDateInit = newDate;

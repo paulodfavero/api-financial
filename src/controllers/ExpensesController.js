@@ -50,7 +50,8 @@ module.exports = {
           },
           startDate,
           expensesType,
-          limitDate: limitDateInit
+          limitDate: limitDateInit,
+          status: false
         };
         expenses = await Expenses.create(data);
         limitDateInit = newDate;
