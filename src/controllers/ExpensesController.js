@@ -63,9 +63,13 @@ module.exports = {
   },
   async updateExpenses(req, res) {
     try {
-      const expenses = await Expenses.updateMany({}, req.body, {
-        new: true
-      });
+      const expenses = await Expenses.findOneAndUpdate(
+        { _id: req.params.id },
+        req.body,
+        {
+          new: true
+        }
+      );
       return res.json(expenses);
     } catch (error) {
       return res.json(`ERROR -- ${error}`);
