@@ -61,7 +61,7 @@ module.exports = {
   },
   async updateGains(req, res) {
     try {
-      const gains = await Gains.findOneAndUpdate(req.body._id, req.body, {
+      const gains = await Gains.updateMany({}, req.body, {
         new: true
       });
       return res.json(gains);
