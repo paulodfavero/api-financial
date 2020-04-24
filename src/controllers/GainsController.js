@@ -62,9 +62,13 @@ module.exports = {
 
   async updateGains(req, res) {
     try {
-      const gains = await Gains.updateMany({}, req.body, {
-        new: true
-      });
+      const gains = await Gains.findOneAndUpdate(
+        { _id: req.params.id },
+        req.body,
+        {
+          new: true
+        }
+      );
       return res.json(gains);
     } catch (error) {
       return res.json(`ERROR TO UPDATE STATUS GAINS -- ${error}`);
