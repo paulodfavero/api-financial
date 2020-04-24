@@ -48,7 +48,7 @@ routes.delete("/category", deleteCategory);
 
 routes.get("/gains", listGains);
 routes.post("/gains", createGains);
-routes.put("/gains", updateGains);
+routes.put("/gains/:id", updateGains);
 routes.delete("/gains", deleteGains);
 
 routes.get("/expenses", listExpenses);
